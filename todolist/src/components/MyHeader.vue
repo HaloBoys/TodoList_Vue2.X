@@ -13,7 +13,7 @@
 import { nanoid } from "nanoid";
 export default {
   name: "MyHeader",
-  props: ["addTodo"],
+  // props: ["addTodo"],
   data() {
     return {
       typeValue: "",
@@ -30,7 +30,11 @@ export default {
       if(!this.typeValue.trim()){
         return alert("输入的数据不能为空！")
       }
-      this.addTodo({id:nanoid(),value:this.typeValue,done:false})
+      // this.addTodo({id:nanoid(),value:this.typeValue,done:false})
+      this.$emit('addTodo',{id:nanoid(),value:this.typeValue,done:false});
+      
+      // 清空输入框
+      this.typeValue = "";
     },
   },
 };

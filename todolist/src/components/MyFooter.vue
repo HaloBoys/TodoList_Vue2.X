@@ -6,7 +6,7 @@
     <span>
       <span>已完成 {{ doneTotal }}</span> / 全部 {{ totalList }}</span
     >
-    <button class="btn btn-danger" @click="cleanFinishedTodo">
+    <button class="btn btn-danger" @click="$emit('cleanFinishedTodo')">
       清除已完成任务
     </button>
   </div>
@@ -15,7 +15,8 @@
 <script>
 export default {
   name: "MyFooter",
-  props: ["todoArr", "checkedTodo", "cleanFinishedTodo"],
+  // props: ["todoArr", "checkedTodo", "cleanFinishedTodo"],
+  props: ["todoArr"],
   computed: {
     // doneTotal() {
     //   let i = 0;
@@ -44,9 +45,10 @@ export default {
       return this.doneTotal === this.totalList && this.doneTotal > 0;
     },
   },
-  methods: { 
+  methods: {
     isCheckAll(event) {
-      this.checkedTodo(event.target.checked);
+      // this.checkedTodo(event.target.checked);
+      this.$emit("checkedTodo", event.target.checked);
     },
   },
 };
