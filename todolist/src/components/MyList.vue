@@ -1,7 +1,8 @@
 <template>
   <div>
     <ul class="todo-main">
-      <MyItem :todoArr="todoArr" :checkTodo="checkTodo" :deleteTodo="deleteTodo" />
+      <!-- <MyItem :todoArr="todoArr" :checkTodo="checkTodo" :deleteTodo="deleteTodo" /> -->
+      <MyItem :todoArr="todoArr"/>
     </ul>
   </div>
 </template>

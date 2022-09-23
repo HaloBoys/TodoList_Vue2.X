@@ -182,6 +182,13 @@ data() {
 1. 将原来 props 写法改为 `@xxxx='xxxx'` 的自定义事件
 2. 子组件中不用 props 接收，使用 `$emit("事件名称",数据)` 的方式调用
 
+# Todo 案例 props 重构为全局事件总线 V1.3
+
+将 APP组件 中所有通过 MyList 组件使用 props 方式传递给 MyItem 组件的方法升级为全局事件总线。主要包括：
+
+1. checkTodo todo 项选择功能 重构
+2. deleteTodo todo 项删除功能 重构
+
 # TEMP
 
 单文件组件中组件嵌套的问题：

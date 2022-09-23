@@ -4,11 +4,12 @@
       <div class="todo-container">
         <div class="todo-wrap">
           <MyHeader @addTodo="addTodo" />
-          <MyList
+          <!-- <MyList
             :todoArr="todoArr"
             :checkTodo="checkTodo"
             :deleteTodo="deleteTodo"
-          />
+          /> -->
+          <MyList :todoArr="todoArr" />
           <MyFooter
             :todoArr="todoArr"
             @checkedTodo="checkedTodo"
@@ -36,7 +37,7 @@ export default {
       // ],
 
       // 如果 localStorage 为空则返回空数组
-      todoArr: JSON.parse(localStorage.getItem('todos')) || []
+      todoArr: JSON.parse(localStorage.getItem("todos")) || [],
     };
   },
   // 本地存储功能实现
@@ -44,9 +45,9 @@ export default {
     todoArr: {
       // 此处必须开启深度监视，否则获取不到 todo 项的 done 状态
       handler: function (value) {
-        localStorage.setItem('todos',JSON.stringify(value));
+        localStorage.setItem("todos", JSON.stringify(value));
       },
-      deep: true
+      deep: true,
     },
   },
   methods: {
@@ -74,6 +75,14 @@ export default {
     cleanFinishedTodo() {
       this.todoArr = this.todoArr.filter((item) => item.done == false);
     },
+  },
+  mounted() {
+    this.$bus.$on("checkTodo", this.checkTodo);
+    this.$bus.$on("deleteTodo", this.deleteTodo);
+  },
+  beforeDestroy() {
+    this.$bus.off("checkTodo");
+    this.$bus.off("deleteTodo");
   },
   components: {
     MyHeader,

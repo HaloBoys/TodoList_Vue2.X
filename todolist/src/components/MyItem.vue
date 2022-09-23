@@ -19,14 +19,17 @@
 <script>
 export default {
   name: "MyItem",
-  props: ["todoArr", "checkTodo", "deleteTodo"],
+  // props: ["todoArr", "checkTodo", "deleteTodo"],
+  props: ["todoArr"],
   methods: {
     todoChangeHandler(id) {
-      this.checkTodo(id);
+      // this.checkTodo(id);
+      this.$bus.$emit("checkTodo", id);
     },
     todoDeleteHandler(id) {
       if (confirm("确定删除该任务吗？")) {
-        this.deleteTodo(id);
+        // this.deleteTodo(id);
+        this.$bus.$emit("deleteTodo", id);
       }
     },
   },
