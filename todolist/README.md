@@ -21,7 +21,7 @@
 
 从绑定事件监听开始
 
-# Todo 案例 基本功能 V1.0
+# Todo 案例 基本功能 V1.0.0
 
 ## 添加Todo功能
 
@@ -142,7 +142,7 @@ cleanFinishedTodo() {
 }
 ```
 
-# Todo 案例 本地存储功能 V1.1
+# Todo 案例 本地存储功能 V1.1.0
 
 使用浏览器 `localStorage` 本地存储 API 将 todos 数据存储在客户端，实现数据刷新不丢失。
 
@@ -169,7 +169,7 @@ data() {
   },
 ```
 
-# Todo 案例 props 重构为自定义事件 V1.2
+# Todo 案例 props 重构为自定义事件 V1.2.0
 
 所有子向父传递数据都重构为自定义事件，主要包括：
 
@@ -182,9 +182,22 @@ data() {
 1. 将原来 props 写法改为 `@xxxx='xxxx'` 的自定义事件
 2. 子组件中不用 props 接收，使用 `$emit("事件名称",数据)` 的方式调用
 
-# Todo 案例 props 重构为全局事件总线 V1.3
+# Todo 案例 props 重构为全局事件总线 V1.3.0
 
 将 APP组件 中所有通过 MyList 组件使用 props 方式传递给 MyItem 组件的方法升级为全局事件总线。主要包括：
+
+1. checkTodo todo 项选择功能 重构
+2. deleteTodo todo 项删除功能 重构
+
+实现思路：
+
+1. 在所有组件实例对象（vc）都能访问到的地方：**Vue 的原型上**添加一个变量：`$bus`（因为有一个重要的内置关系：`VueComponent.prototype.__proto__ === Vue.prototype`）
+2. 接收数据的一方给 `$bus` 绑定自定义事件，事件的回调留在接收数据的组件自身
+3. 提供数据的一方使用 `$bus.$emit('xxxx',数据)` 的方式传递数据
+
+# Todo 案例 props 重构为消息订阅与发布 V1.3.1
+
+消息订阅与发布跟全局事件总线功能差不多，将 V1.3.0 版本中的全局事件总线实现使用消息订阅与发布实现。
 
 1. checkTodo todo 项选择功能 重构
 2. deleteTodo todo 项删除功能 重构

@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import pubsub from 'pubsub-js'
 import MyHeader from "./components/MyHeader.vue";
 import MyList from "./components/MyList.vue";
 import MyFooter from "./components/MyFooter.vue";
@@ -56,7 +57,7 @@ export default {
       this.todoArr.unshift(todo);
     },
     // 勾选功能
-    checkTodo(id) {
+    checkTodo(subName,id) {
       this.todoArr.forEach((item) => {
         if (item.id === id) {
           item.done = !item.done;
@@ -64,7 +65,7 @@ export default {
       });
     },
     // 删除功能
-    deleteTodo(id) {
+    deleteTodo(subName,id) {
       this.todoArr = this.todoArr.filter((item) => item.id !== id);
     },
     // 全选/全不选功能
@@ -77,12 +78,16 @@ export default {
     },
   },
   mounted() {
-    this.$bus.$on("checkTodo", this.checkTodo);
-    this.$bus.$on("deleteTodo", this.deleteTodo);
+    // this.$bus.$on("checkTodo", this.checkTodo);
+    // this.$bus.$on("deleteTodo", this.deleteTodo);
+    this.checkTodopubId = pubsub.subscribe("checkTodo",this.checkTodo);
+    this.deleteTodopubId = pubsub.subscribe("deleteTodo",this.deleteTodo);
   },
   beforeDestroy() {
-    this.$bus.off("checkTodo");
-    this.$bus.off("deleteTodo");
+    // this.$bus.off("checkTodo");
+    // this.$bus.off("deleteTodo");
+    pubsub.unsubscribe(this.checkTodopubId);
+    pubsub.unsubscribe(this.deleteTodopubId);
   },
   components: {
     MyHeader,

@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import pubsub from 'pubsub-js'
+
 export default {
   name: "MyItem",
   // props: ["todoArr", "checkTodo", "deleteTodo"],
@@ -24,12 +26,14 @@ export default {
   methods: {
     todoChangeHandler(id) {
       // this.checkTodo(id);
-      this.$bus.$emit("checkTodo", id);
+      // this.$bus.$emit("checkTodo", id);
+      pubsub.publish('checkTodo',id);
     },
     todoDeleteHandler(id) {
       if (confirm("确定删除该任务吗？")) {
         // this.deleteTodo(id);
-        this.$bus.$emit("deleteTodo", id);
+        // this.$bus.$emit("deleteTodo", id);
+        pubsub.publish('deleteTodo',id);
       }
     },
   },
