@@ -29,12 +29,25 @@ export default {
   name: "App",
   data() {
     return {
-      todoArr: [
-        { id: "001", value: "001", done: false },
-        { id: "002", value: "002", done: false },
-        { id: "003", value: "003", done: true },
-      ],
+      // todoArr: [
+      //   { id: "001", value: "001", done: false },
+      //   { id: "002", value: "002", done: false },
+      //   { id: "003", value: "003", done: true },
+      // ],
+
+      // 如果 localStorage 为空则返回空数组
+      todoArr: JSON.parse(localStorage.getItem('todos')) || []
     };
+  },
+  // 本地存储功能实现
+  watch: {
+    todoArr: {
+      // 此处必须开启深度监视，否则获取不到 todo 项的 done 状态
+      handler: function (value) {
+        localStorage.setItem('todos',JSON.stringify(value));
+      },
+      deep: true
+    },
   },
   methods: {
     // 添加Todo功能

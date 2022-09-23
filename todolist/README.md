@@ -142,6 +142,33 @@ cleanFinishedTodo() {
 }
 ```
 
+# Todo 案例本地存储功能 V1.1
+
+使用浏览器 `localStorage` 本地存储 API 将 todos 数据存储在客户端，实现数据刷新不丢失。
+
+实现思路：
+
+不用更改整个项目的架构，直接使用 vue 提供的 **watch 功能（深度监视）**来监视 todoArr 数组，如果数据发生变化，则在 watch 处理函数中调用 localStorage 方法，将最新的 todoArr 存储在浏览器。data 中的数据源改为从 localStorage 中获取：
+
+```javascript
+data() {
+  // 如果 localStorage 为空则返回空数组
+  todoArr: JSON.parse(localStorage.getItem('todos')) || []
+};
+```
+
+```javascript
+  watch: {
+    todoArr: {
+      // 此处必须开启深度监视，否则获取不到 todo 项的 done 状态
+      handler: function (value) {
+        localStorage.setItem('todos',JSON.stringify(value));
+      },
+      deep: true
+    },
+  },
+```
+
 # TEMP
 
 单文件组件中组件嵌套的问题：
