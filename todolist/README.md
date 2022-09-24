@@ -202,6 +202,21 @@ data() {
 1. checkTodo todo 项选择功能 重构
 2. deleteTodo todo 项删除功能 重构
 
+# Todo 案例 编辑功能 V2.0.0
+
+给每个 todo 项添加编辑功能
+
+实现思路：
+
+1. 添加编辑按钮，并绑定事件并将 todo 项传给回调
+2. 在回调中使用 $set 方法，为 todo 项动态添加一个 `isEdit` 属性，并设置为 true
+3. 添加 input 文本框，数据绑定到 todo 项的 value，并且input 文本框和原来的文本标签只能显示一个，使用 `v-show` 指令
+4. input 文本框失去焦点，isEdit 为 false 文本框变文本
+5. 在 input 文本框失去焦点回调函数中触发一个更新todo的自定义事件（传入todo.id 与input 文本框中最新的值），在传入回调函数之前校验文本框的值是否为空，并在APP组件中触发自定义事件，接收参数，处理更新todo逻辑
+6. 优化：点击按钮让 input 文本框 自动获取焦点，并将其写在 `$nextTick` 中（`$nextTick` 会在 DOM 节点更新完毕之后再执行回调）
+  - **bug!**，这里有个bug，不知道怎么解决：
+  - 添加的todo点击编辑无法获取焦点，刷新后即可获取焦点
+
 # TEMP
 
 单文件组件中组件嵌套的问题：

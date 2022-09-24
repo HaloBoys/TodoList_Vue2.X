@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import pubsub from 'pubsub-js'
+import pubsub from "pubsub-js";
 import MyHeader from "./components/MyHeader.vue";
 import MyList from "./components/MyList.vue";
 import MyFooter from "./components/MyFooter.vue";
@@ -57,7 +57,7 @@ export default {
       this.todoArr.unshift(todo);
     },
     // 勾选功能
-    checkTodo(subName,id) {
+    checkTodo(subName, id) {
       this.todoArr.forEach((item) => {
         if (item.id === id) {
           item.done = !item.done;
@@ -65,7 +65,8 @@ export default {
       });
     },
     // 删除功能
-    deleteTodo(subName,id) {
+    deleteTodo(subName, id) {
+      console.log(subName,"pubSub-js 实现删除功能！");
       this.todoArr = this.todoArr.filter((item) => item.id !== id);
     },
     // 全选/全不选功能
@@ -76,16 +77,26 @@ export default {
     cleanFinishedTodo() {
       this.todoArr = this.todoArr.filter((item) => item.done == false);
     },
+    // 更新Todo
+    updateTodo(id,value) {
+      this.todoArr.forEach((item) => {
+        if (item.id === id) {
+          item.value = value;
+        }
+      });
+    },
   },
   mounted() {
     // this.$bus.$on("checkTodo", this.checkTodo);
     // this.$bus.$on("deleteTodo", this.deleteTodo);
-    this.checkTodopubId = pubsub.subscribe("checkTodo",this.checkTodo);
-    this.deleteTodopubId = pubsub.subscribe("deleteTodo",this.deleteTodo);
+    this.$bus.$on("updateTodo", this.updateTodo);
+    this.checkTodopubId = pubsub.subscribe("checkTodo", this.checkTodo);
+    this.deleteTodopubId = pubsub.subscribe("deleteTodo", this.deleteTodo);
   },
   beforeDestroy() {
     // this.$bus.off("checkTodo");
     // this.$bus.off("deleteTodo");
+    this.$bus.off("updateTodo");
     pubsub.unsubscribe(this.checkTodopubId);
     pubsub.unsubscribe(this.deleteTodopubId);
   },
@@ -97,7 +108,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 /*base*/
 body {
   background: #fff;
@@ -123,9 +134,21 @@ body {
   border: 1px solid #bd362f;
 }
 
+.btn-primary {
+  color: #fff;
+  margin-right: 10px;
+  background-color: #109868;
+  border: 1px solid #21252b;
+}
+
 .btn-danger:hover {
   color: #fff;
   background-color: #bd362f;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #0c724e;
 }
 
 .btn:focus {

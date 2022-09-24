@@ -27,12 +27,16 @@ export default {
 
     // 2. 通过 v-model 指令获取文本框值
     enterHandle() {
-      if(!this.typeValue.trim()){
-        return alert("输入的数据不能为空！")
+      if (!this.typeValue.trim()) {
+        return alert("输入的数据不能为空！");
       }
       // this.addTodo({id:nanoid(),value:this.typeValue,done:false})
-      this.$emit('addTodo',{id:nanoid(),value:this.typeValue,done:false});
-      
+      this.$emit("addTodo", {
+        id: nanoid(),
+        value: this.typeValue,
+        done: false,
+      });
+
       // 清空输入框
       this.typeValue = "";
     },

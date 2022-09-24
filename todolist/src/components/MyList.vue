@@ -12,7 +12,8 @@ import MyItem from "./MyItem.vue";
 
 export default {
   name: "MyList",
-  props: ["todoArr", "checkTodo","deleteTodo"],
+  // props: ["todoArr", "checkTodo","deleteTodo"],
+  props: ["todoArr"],
   data() {
     return {};
   },
